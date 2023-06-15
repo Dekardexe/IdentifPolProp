@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Diplom</title>
+  <!-- Import Styles -->
+  <link rel="stylesheet" href="./assets/styles.css" />
+  <link rel="icon" href="./assets/ovc.jpg" />
+  <!-- Import Vue.js -->
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+  <!--script src="plotly-2.20.0.min.js" charset="utf-8"></script-->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input type="file" onchange="readFile(this)">
+    <main-form @imp-data="updData"></main-form>
+    <!--third-form  @imp-data="updData"></third-form-->
+    
+    <result-list v-if="result.length > 0" v-bind:res="result"></result-list>
+
+    <form class="review-form"><input type="button" onclick="graphBuild()" value="График!"></form>
+  </div>
+  <div id="tester" style="width:1000px;height:500px;"></div>
+  <!--div><canvas id="myChart"></canvas></div-->
+
+  <!----------------fileReader------------------------------->
+  <script>
+    function readFile(input) {
+      let file = input.files[0];
+      let reader = new FileReader();
+
+      reader.readAsText(file);
+
+      reader.onload = function () {
+        console.log(reader.result);
+        localStorage["text"] = reader.result;
+      };
+      reader.onerror = function () {
+        console.log(reader.error);
+      };
+      let fileText = reader.result;
+    }
+  </script>
+
+  <!----------------plotly Graph------------------------------->
+  <script src="./components/gr.js">
+    //document.getElementById("clickMe").onclick = graphBuild;
+  </script>
+
+  <!-- Import App -->
+  <script src="./main.js"></script>
+
+  <!-- Import Components -->
+  <script src="./components/MainForm.js"></script>
+  <script src="./components/ThirdForm.js"></script>
+  <script src="./components/ResultList.js"></script>
+
+  <!-- Mount App -->
+  <script type="module">
+    const mountedApp = app.mount('#app')
+  </script>
+</body>
+
+</html>
